@@ -66,6 +66,15 @@ git remote add origin https://github.com/fabien-ors/example-pkg
 git push -u origin master
 ```
 
+### Update your code:
+Modify or add python modules in src/example_pkg, then update your git repository
+```sh
+git add *
+git commit
+git push
+```
+You can test your package by installing it locally (before building and uploading)
+
 ### Clean package:
 ```sh
 rm -rf dist build
@@ -77,7 +86,6 @@ rm -rf src/*/__pycache__
 ```sh
 python3 -m build
 ```
-Note: Then you can test your built package by installing it locally (before upload)
 
 ### Upload to TestPyPi:
 Each time you want to upload, you MUST upgrade the version in setup.cfg file!
