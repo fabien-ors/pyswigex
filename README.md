@@ -69,6 +69,7 @@ git push -u origin master
 ```sh
 rm -rf dist build
 rm -rf src/*.egg-info
+rm -rf src/*/__pycache__
 ```
 
 ### Build package:
