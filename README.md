@@ -30,6 +30,7 @@ Note: Command to be executed from packaging_tutorial directory (see below)
 ```python
 import example_pkg
 example_pkg.fib(10)
+help(example_pkg.fib)
 ```
 Note: The fib function is directly available since fibo.py is imported in __init__.py
 
