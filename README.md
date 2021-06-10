@@ -42,7 +42,7 @@ Stuff coming from https://packaging.python.org/tutorials/packaging-projects/
 ### Create package tree:
 
 Create folders and add your python code in the src directory:
-
+```
 packaging_tutorial/
 ├── LICENSE
 ├── pyproject.toml
@@ -54,7 +54,7 @@ packaging_tutorial/
 │       ├── fibo.py
 │       └── yourcode.py
 └── tests/
-
+```
 All the following commands are executed from the packaging_tutorial directory
 
 ### Github repository creation:
@@ -73,7 +73,7 @@ git add *
 git commit
 git push
 ```
-You can test your package by installing it locally (before building and uploading)
+Note: You can test your package by installing it locally before building and uploading it to TestPyPi (see above).
 
 ### Clean package:
 ```sh
