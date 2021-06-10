@@ -22,7 +22,7 @@ Installation:
 ```sh
 python3 -m pip install -e .
 ```
-Note: Command to be executed from packaging_tutorial directory (see below)
+Note: Command to be executed from `packaging_tutorial` directory (see below)
 
 
 ## Usage:
@@ -32,7 +32,7 @@ import example_pkg
 example_pkg.fib(10)
 help(example_pkg.fib)
 ```
-Note: The fib function is directly available since fibo.py is imported in __init__.py
+Note: The fib function is directly available since `fibo.py` is imported in `__init__.py`
 
 
 ## Reminder:
@@ -41,7 +41,7 @@ Stuff coming from https://packaging.python.org/tutorials/packaging-projects/
 
 ### Create package tree:
 
-Create folders and add your python code in the src directory:
+Create folders and add your python code in the `src/example_pkg` folder:
 ```
 packaging_tutorial/
 ├── LICENSE
@@ -55,7 +55,7 @@ packaging_tutorial/
 │       └── yourcode.py
 └── tests/
 ```
-All the following commands are executed from the packaging_tutorial directory
+All the following commands are executed from the packaging_tutorial directory.
 
 ### Github repository creation:
 ```sh
@@ -67,7 +67,7 @@ git push -u origin master
 ```
 
 ### Update your code:
-Modify or add python modules in src/example_pkg, then update your git repository
+Modify or add python modules in `src/example_pkg` folder, then update your git repository:
 ```sh
 git add *
 git commit
@@ -88,7 +88,7 @@ python3 -m build
 ```
 
 ### Upload to TestPyPi:
-Each time you want to upload, you MUST upgrade the version in setup.cfg file!
+Each time you want to upload, you MUST upgrade the version in `setup.cfg` file!
 https://stackoverflow.com/questions/56520660/upload-a-new-release-to-testpypi
 
 ```sh
