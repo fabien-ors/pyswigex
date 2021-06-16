@@ -47,7 +47,7 @@ packaging_tutorial/
 ├── LICENSE
 ├── pyproject.toml
 ├── README.md
-├── setup.cfg
+├── setup.py
 ├── src/
 │   └── example_pkg/
 │       ├── __init__.py
@@ -88,7 +88,7 @@ python3 -m build
 ```
 
 ### Upload to TestPyPi:
-Each time you want to upload, you MUST upgrade the version in `setup.cfg` file!
+Each time you want to upload, you MUST upgrade the version in `setup.py` file!
 https://stackoverflow.com/questions/56520660/upload-a-new-release-to-testpypi
 
 ```sh
