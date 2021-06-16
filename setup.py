@@ -23,7 +23,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: Geosciences :: Geostatistics :: Machine Learning",
     ],
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
