@@ -1,7 +1,16 @@
 # Example of a python package distributed under TestPyPi
 
+TestPyPi URL :
+https://test.pypi.org/project/example-pkg-fabien-ors/
+
+
+## References:
+
 Package example following this tutorial :
-https://packaging.python.org/tutorials/packaging-projects/
+https://packaging.python.org/tutorials/packaging-projects
+
+Modified in order to use SWIG (c++ to python) inspired by :
+https://pypi.org/project/swigibpy
 
 
 ## Installation:
@@ -28,12 +37,10 @@ Note: Command to be executed from `packaging_tutorial` directory (see below)
 ## Usage:
 
 ```python
-import example_pkg
-example_pkg.fib(10)
-help(example_pkg.fib)
+import fibo
+fibo.fib(10)
+help(fibo.fib)
 ```
-Note: The fib function is directly available since `fibo.py` is imported in `__init__.py`
-
 
 ## Reminder:
 
@@ -41,7 +48,7 @@ Stuff coming from https://packaging.python.org/tutorials/packaging-projects/
 
 ### Create package tree:
 
-Create folders and add your python code in the `src/example_pkg` folder:
+Create folders and add your c++ code in the `src` :
 ```
 packaging_tutorial/
 ├── LICENSE
@@ -49,11 +56,11 @@ packaging_tutorial/
 ├── README.md
 ├── setup.py
 ├── src/
-│   └── example_pkg/
-│       ├── __init__.py
-│       ├── fibo.py
-│       └── yourcode.py
+│   ├── fibo.i
+│   ├── fibo.hpp
+│   └── yourcode.[cpp/hpp]
 └── tests/
+    └── test_fibo.py
 ```
 All the following commands are executed from the packaging_tutorial directory.
 
@@ -67,7 +74,7 @@ git push -u origin master
 ```
 
 ### Update your code:
-Modify or add python modules in `src/example_pkg` folder, then update your git repository:
+Modify or add python modules or c++ source code in `src` folder, then update your git repository:
 ```sh
 git add *
 git commit
@@ -77,9 +84,14 @@ Note: You can test your package by installing it locally before building and upl
 
 ### Clean package:
 ```sh
+# Remove setuptools stuff:
 rm -rf dist build
 rm -rf src/*.egg-info
-rm -rf src/*/__pycache__
+rm -rf src/__pycache__
+# Remove swig stuff:
+rm -rf src/*.py
+rm -rf src/*_wrap.*
+rm -rf src/*.so
 ```
 
 ### Build package:

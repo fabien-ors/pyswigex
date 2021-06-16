@@ -2,3 +2,6 @@ dist
 build
 *egg-info*
 *__pycache__*
+*.so
+*_wrap.*
+src/*.py
