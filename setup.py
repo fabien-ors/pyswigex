@@ -1,4 +1,4 @@
-from os.path import join, dirname, abspath
+from os.path import join
 try:
     from setuptools import setup, Extension
     from setuptools.command.build_py import build_py as _build_py  
@@ -8,12 +8,11 @@ except:
 
 # Thanks to https://docs.python.org/3/distutils/setupscript.html
 module_name = "fibo"
-root_dir = abspath(dirname(__file__))
 
 # Only add the SWIG interface file in extensions list
 module_ext = Extension('_' + module_name,
                        sources=[
-                           join(root_dir, 'src', module_name + '.i')
+                           join('src', module_name + '.i')
                        ],
                        swig_opts=['-c++'], # https://lists.debian.org/debian-user/2008/03/msg01744.html
                       )
@@ -31,7 +30,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="example-pkg-fabien-ors",
-    version="0.1.6",
+    version="0.1.7",
     author="Fabien Ors",
     author_email="fabien.ors@mines-paristech.fr",
     description="Minimal Example of a python source package using SWIG and distributed under TestPyPi",
@@ -54,7 +53,7 @@ setup(
     py_modules=[module_name],
     cmdclass={'build_py' : build_py},
     package_dir={"": "src"},
-    python_requires=">=3.6",
+    python_requires=">=3",
 )
 
 fh.close()
