@@ -1,2 +1,3 @@
 recursive-include src *.i
 recursive-include src *.hpp
+recursive-include src *.cpp

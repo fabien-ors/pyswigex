@@ -1,4 +1,5 @@
 from os.path import join
+from glob import glob
 try:
     from setuptools import setup, Extension
     from setuptools.command.build_py import build_py as _build_py  
@@ -8,12 +9,10 @@ except:
 
 # Thanks to https://docs.python.org/3/distutils/setupscript.html
 module_name = "fibo"
-
+cpps = glob(join('src','*.cpp'))
 # Only add the SWIG interface file in extensions list
 module_ext = Extension('_' + module_name,
-                       sources=[
-                           join('src', module_name + '.i')
-                       ],
+                       sources=[ join('src', module_name + '.i') ] + cpps,
                        swig_opts=['-c++'], # https://lists.debian.org/debian-user/2008/03/msg01744.html
                       )
 
@@ -30,7 +29,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="example-pkg-fabien-ors",
-    version="0.1.9",
+    version="0.2.0",
     author="Fabien Ors",
     author_email="fabien.ors@mines-paristech.fr",
     description="Minimal Example of a python source package using SWIG and distributed under TestPyPi",

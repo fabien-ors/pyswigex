@@ -1,39 +1,23 @@
-#include <iostream>
+#pragma once
+
 #include <vector>
+#include <string>
 
 /**
- * Write Fibonacci series up to n
- * @param n  Positive Integer
+ * Class which handles Fibonacci integers serie
  */
-void fib(int n)
+class Fibo
 {
-  int a = 0;
-  int b = 1;
-  while (a < n)
-  {
-    std::cout << a << " ";
-    int aa = a;
-    a = b;
-    b = aa+b;
-  }
-  std::cout << std::endl;
-}
+  public:
+    Fibo (int n, const std::string& title = "Fibonacci");
+    ~Fibo();
+    
+    void display(bool showTitle = true) const;
+    
+    std::vector<int> get() const;
+  
+  private:
+    int         _n;     /// Maximum integer for the serie
+    std::string _title; /// Title to be displayed when displaying the serie
+};
 
-/**
- * Return Fibonacci series up to n
- * @param n  Positive Integer
- */
-std::vector<double> fib2(int n)
-{
-  std::vector<double> res;
-  int a = 0;
-  int b = 1;
-  while (a < n)
-  {
-    res.push_back(a);
-    int aa = a;
-    a = b;
-    b = aa+b;
-  }
-  return res;
-}
