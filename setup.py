@@ -30,7 +30,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="example-pkg-fabien-ors",
-    version="0.1.8",
+    version="0.1.9",
     author="Fabien Ors",
     author_email="fabien.ors@mines-paristech.fr",
     description="Minimal Example of a python source package using SWIG and distributed under TestPyPi",

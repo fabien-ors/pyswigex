@@ -5,10 +5,8 @@ The idea of this **minimal example** package is to show how to distribute a C++ 
   * GitHub source: https://github.com/fabien-ors/example-pkg
 
 ## References
-This package example follows [this tutorial](https://packaging.python.org/tutorials/packaging-projects)
-
-It has been modified in order to use SWIG (c++ to python) according [this documentation](https://docs.python.org/3/distutils/setupscript.html)
-
+This package example follows [this tutorial](https://packaging.python.org/tutorials/packaging-projects).
+It has been modified in order to use SWIG (c++ to python) according [this documentation](https://docs.python.org/3/distutils/setupscript.html).
 Some tricks and advices come from [this package](https://pypi.org/project/swigibpy/)
 
 ## Requirements
@@ -26,7 +24,7 @@ sudo apt install swig
 sudo apt install git
 ```
 ### MacOS required tools installation:
-Under MacOS, the GCC compiler is already installed (Not yet tested)
+Under MacOS, the GCC (or Clang) compiler is already installed (Not yet tested)
 ```sh
 brew install swig
 brew install python3
@@ -34,9 +32,9 @@ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3 get-pip.py
 sudo apt install git
 ```
-### Windows required tools instalaltion:
+### Windows required tools installation:
 Download and install the following tools:
-  * Python 3+[from here](https://www.python.org/downloads) (which comes with pip)
+  * Python 3+ [from here](https://www.python.org/downloads) (which comes with pip)
   * SWIG 4+ [from here](http://www.swig.org/download.html) (extract the archive in a directory of yours, let's say *C:\swigwin-4.0.2*, see Notes below)
   * Microsoft Visual C++ Compiler 14+ [from here](https://visualstudio.microsoft.com/visual-cpp-build-tools) (see Notes below)
   * Git client [from here](https://gitforwindows.org)
@@ -64,7 +62,7 @@ Notes:
   * **--extra-index-url** is used because there is some limitations: test.pypi.org cannot use setuptools! (see [this thread](https://github.com/ultrajson/ultrajson/issues/366))
   * **--no-cache-dir** is used to ensure downloading last version from TestPyPi (see [this thread](https://stackoverflow.com/questions/9510474/removing-pips-cache))
 
-## Install package from source
+## Install from sources
 Cloning the repository and installing
 ```sh
 git clone https://github.com/fabien-ors/example-pkg
@@ -124,7 +122,7 @@ git push
 ```
 Notes:
   * You may have to git add *.gitignore* which is not selected by `git add *`
-  * You can test your package by installing it locally before building and uploading it to TestPyPi (see below)
+  * You can test your package by installing it locally before building and uploading it to TestPyPi (see *Install from sources* above)
 
 ### Clean
 This command remove setuptools and SWIG generated stuffs:
