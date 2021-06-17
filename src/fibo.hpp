@@ -12,8 +12,9 @@ void fib(int n)
   while (a < n)
   {
     std::cout << a << " ";
+    int aa = a;
     a = b;
-    b = a+b;
+    b = aa+b;
   }
   std::cout << std::endl;
 }
@@ -30,8 +31,9 @@ std::vector<double> fib2(int n)
   while (a < n)
   {
     res.push_back(a);
+    int aa = a;
     a = b;
-    b = a+b;
+    b = aa+b;
   }
   return res;
 }

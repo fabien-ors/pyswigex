@@ -1,91 +1,40 @@
-import subprocess
-import setuptools
-
-# Thanks to https://pypi.org/project/swigibpy/
-from os import chdir, getcwd
 from os.path import join, dirname, abspath
-
 try:
-    from setuptools.command.build_ext import build_ext
-    from setuptools import setup, Extension, Command
+    from setuptools import setup, Extension
+    from setuptools.command.build_py import build_py as _build_py  
 except:
-    from distutils.command.build_ext import build_ext
-    from distutils import setup, Extension, Command
+    from distutils import setup, Extension
+    from distutils.command.build_py import build_py as _build_py  
 
+# Thanks to https://docs.python.org/3/distutils/setupscript.html
 module_name = "fibo"
-module_wrap = module_name + '_wrap.cpp'
-module_header = module_name + '.hpp'
-module_interface = module_name + '.i'
 root_dir = abspath(dirname(__file__))
-package_dir = join(root_dir, "src")
 
+# Only add the SWIG interface file in extensions list
 module_ext = Extension('_' + module_name,
-                       sources=[join(package_dir, module_wrap)],
+                       sources=[
+                           join(root_dir, 'src', module_name + '.i')
+                       ],
+                       swig_opts=['-c++'], # https://lists.debian.org/debian-user/2008/03/msg01744.html
                       )
 
-def swigify():
-    cwd = getcwd()
-    swig_opts = [
-      '-v',
-      '-c++',
-      '-python',
-      '-outdir', package_dir
-      ]
-
-    chdir(package_dir)
-    try:
-        swig_cmd = ['swig'] + swig_opts + ['-o', module_wrap]
-        swig_cmd.append(join(package_dir, module_interface))
-        subprocess.check_call(swig_cmd)
-    except subprocess.CalledProcessError as cpe:
-        pass
-    finally:
-        chdir(cwd)
-
-class Swigify(Command):
-    description = "Regenerate module's wrapper code (requires SWIG)"
-    user_options = []
-
+# Run build_ext (SWIG) prior to build_py
+# https://stackoverflow.com/questions/29477298/setup-py-run-build-ext-before-anything-else
+class build_py(_build_py):
     def run(self):
-        swigify()
+        self.run_command("build_ext")
+        return super().run()
 
-
-
-class FiboBuildExt(build_ext):
-              
-    def run(self):
-        # Generate Swig wrapper
-        print("Launching SWIG...")
-        swigify()
-        
-        # Build all
-        print("Building Package...")
-        build_ext.run(self)
-
-    def build_extensions(self):
-        try:
-            cmd = ['python3'] + ['-m', 'pybind11'] + ['--includes']
-            # https://stackoverflow.com/questions/2502833/store-output-of-subprocess-popen-call-in-a-string
-            flags = subprocess.check_output(cmd).decode("utf-8")
-            print(flags)            
-        except subprocess.CalledProcessError as cpe:
-            pass
-            
-        # Customize flags for gcc (keep the trailing coma)
-        extra = (flags + ' -D_USE_PYBIND',)
-        for ext in self.extensions:
-            ext.extra_compile_args += extra
-        build_ext.build_extensions(self)
-
+# Load reamdme file       
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-setuptools.setup(
+setup(
     name="example-pkg-fabien-ors",
-    version="0.1.0",
+    version="0.1.6",
     author="Fabien Ors",
     author_email="fabien.ors@mines-paristech.fr",
-    description="A small example package from official tutorial using SWIG",
+    description="Minimal Example of a python source package using SWIG and distributed under TestPyPi",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/fabien-ors/example-pkg",
@@ -103,9 +52,7 @@ setuptools.setup(
     ],
     ext_modules=[module_ext],
     py_modules=[module_name],
-    cmdclass={
-      'build_ext': FiboBuildExt,
-    },
+    cmdclass={'build_py' : build_py},
     package_dir={"": "src"},
     python_requires=">=3.6",
 )
