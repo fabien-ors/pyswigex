@@ -5,3 +5,5 @@ build
 *.so
 *_wrap.*
 src/*.py
+doxygen/xml
+doxygen/html
