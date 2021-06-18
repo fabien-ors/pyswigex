@@ -2,9 +2,11 @@
 
 import fibo
 
+# Create fibonacci object
+f = fibo.Fibo(250)
 # Display fibonacci list
-fibo.fib(250)
+f.display()
 # Get fibonacci list as array and display
-fibo.v = fib2(50)
+v = f.get()
 print("v=",v)
 

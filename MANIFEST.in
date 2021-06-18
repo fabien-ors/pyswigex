@@ -1,3 +1,6 @@
-recursive-include src *.i
+include src/*.i
 recursive-include src *.hpp
 recursive-include src *.cpp
+include doxygen/doxy2swig.py
+include doxygen/Doxyfile
+include doxygen/LICENSE
