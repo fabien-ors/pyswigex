@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 import glob
 import subprocess
@@ -35,7 +36,7 @@ class Doxygen(Command):
     def run(self):
         os.chdir('doxygen')
         try:
-            cmd ='doxygen Doxyfile'.split(' ')
+            cmd = ['doxygen', 'Doxyfile']
             print("Running command: ", cmd)
             subprocess.check_call(cmd)
         except subprocess.CalledProcessError as cpe:
@@ -58,7 +59,11 @@ class Doxy2Swig(Command):
             print("Launch doxygen command before doxy2swig")
         else:
             os.chdir('doxygen')
-            cmd = 'python3 doxy2swig.py xml/index.xml ../src/documentation.i'.split(' ')
+            if (sys.platform.startswith("win")):
+                pycmd = "python"
+            else: 
+                pycmd = "python3"
+            cmd = [pycmd, 'doxy2swig.py', 'xml/index.xml', '../src/documentation.i']
             print("Running command: ", cmd)
             try:
                 subprocess.check_call(cmd)
@@ -133,7 +138,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="pyswigex",
-    version="0.0.1",
+    version="0.0.2",
     author="Fabien Ors",
     author_email="fabien.ors@mines-paristech.fr",
     description="Ready-to-use complete example of a cross-platform Python source package built from C++ library using SWIG and doxygen",
