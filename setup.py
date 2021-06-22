@@ -1,6 +1,6 @@
-from os import chdir, getcwd
-from os.path import join, isfile
-from glob import glob
+import os
+import shutil
+import glob
 import subprocess
 try:
     from setuptools import setup, Extension, Command
@@ -15,10 +15,11 @@ except:
 module_name = "fibo"
 
 # Add C++ body source files and the unique SWIG interface file in extensions list (see build_ext command)
-cpps = glob(join('src','*.cpp'))
+cpps = glob.glob(os.path.join('src','*.cpp'))
+module_int = os.path.join('src', module_name + '.i')
 module_ext = Extension('_' + module_name,
-                       sources=[ join('src', module_name + '.i') ] + cpps,
-                       swig_opts=['-c++'], # https://lists.debian.org/debian-user/2008/03/msg01744.html
+                       sources = cpps + [module_int], # Keep SWIG interface file in last position
+                       swig_opts = ['-c++'], # https://lists.debian.org/debian-user/2008/03/msg01744.html
                       )
 
 class Doxygen(Command):
@@ -29,18 +30,18 @@ class Doxygen(Command):
         self.cwd = None
 
     def finalize_options(self):
-        self.cwd = getcwd()
+        self.cwd = os.getcwd()
 
     def run(self):
-        chdir('doxygen')
+        os.chdir('doxygen')
         try:
-            cmd = ['doxygen','Doxyfile']
+            cmd ='doxygen Doxyfile'.split(' ')
             print("Running command: ", cmd)
             subprocess.check_call(cmd)
         except subprocess.CalledProcessError as cpe:
             pass
         finally:
-            chdir(self.cwd)
+            os.chdir(self.cwd)
 
 class Doxy2Swig(Command):
     description = "Regenerate SWIG docstring documentation from XML doxygen documentation"
@@ -50,21 +51,21 @@ class Doxy2Swig(Command):
         self.cwd = None
 
     def finalize_options(self):
-        self.cwd = getcwd()
+        self.cwd = os.getcwd()
 
     def run(self):
-        if (not isfile('doxygen/xml/index.xml')):
+        if (not os.path.isfile('doxygen/xml/index.xml')):
             print("Launch doxygen command before doxy2swig")
         else:
-            chdir('doxygen')
-            cmd = ['python3','doxy2swig.py','xml/index.xml','../src/documentation.i']
+            os.chdir('doxygen')
+            cmd = 'python3 doxy2swig.py xml/index.xml ../src/documentation.i'.split(' ')
             print("Running command: ", cmd)
             try:
                 subprocess.check_call(cmd)
             except subprocess.CalledProcessError as cpe:
                 pass
             finally:
-                chdir(self.cwd)
+                os.chdir(self.cwd)
 
 class MyBuildExt(build_ext):
     """ Override build_ext command so that some customized commands are executed:
@@ -77,21 +78,62 @@ class MyBuildExt(build_ext):
         self.run_command("doxy2swig")
         return super().run() # Run swig thanks to extensions list above
 
+# https://github.com/pypa/setuptools/issues/1347#issuecomment-387802255
+class MyClean(Command):
+    description = "Custom clean command to really remove all undesirable stuff"
+    user_options = []
+    
+    to_be_cleaned = ['./dist',
+                     './build',
+                     './setup.cfg',
+                     './src/*.egg-info',
+                     './src/__pycache__',
+                     './src/' + module_name + '.py',
+                     './src/' + module_name + '_wrap.*',
+                     './src/*.so',
+                     './doxygen/html',
+                     './doxygen/xml',
+                     './src/documentation.i']
+                   
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        # Get directory containing setup.py
+        root_dir = os.path.abspath(os.path.dirname(__file__))
+
+        # Parse all stuff to be cleaned and deleted
+        for path_pattern in self.to_be_cleaned:
+            # Make paths absolute
+            abs_paths = glob.glob(os.path.join(root_dir, path_pattern))
+            for path in [str(p) for p in abs_paths]:
+                if not path.startswith(root_dir):
+                    # Die if path in to_be_cleaned is outside root directory
+                    raise ValueError("%s is not a path inside %s" % (path, root_dir))
+                print('Removing %s' % os.path.relpath(path))
+                if (os.path.isfile(path)):
+                    os.remove(path)     # remove one file
+                else:
+                    shutil.rmtree(path) # rmtree does not know how to remove files
+                
+                
 # https://stackoverflow.com/questions/29477298/setup-py-run-build-ext-before-anything-else
 class MyBuildPy(build_py):
-    """ Override build_py command so that build_ext command is executed before building the package
-    """ 
+    """ Override build_py command so that build_ext command is executed before building the package.""" 
     def run(self):
         self.run_command("build_ext")
         return super().run() # Really run build_py
 
-# Load reamdme file       
+# Load readme file       
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name="example-pkg-fabien-ors",
-    version="0.2.0",
+    version="0.3.2",
     author="Fabien Ors",
     author_email="fabien.ors@mines-paristech.fr",
     description="Ready-to-use complete example of a python source package built from C++ library",
@@ -117,6 +159,7 @@ setup(
         'build_ext' : MyBuildExt,
         'doxygen'   : Doxygen,
         'doxy2swig' : Doxy2Swig,
+        'clean'     : MyClean,
     },
     package_dir={"": "src"},
     python_requires=">=3",
