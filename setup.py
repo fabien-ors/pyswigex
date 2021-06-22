@@ -138,7 +138,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="pyswigex",
-    version="0.0.2",
+    version="0.0.3",
     author="Fabien Ors",
     author_email="fabien.ors@mines-paristech.fr",
     description="Ready-to-use complete example of a cross-platform Python source package built from C++ library using SWIG and doxygen",

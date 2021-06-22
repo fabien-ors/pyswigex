@@ -24,6 +24,9 @@ For using this package, the following tools must be available (See required tool
   * [GCC](https://gcc.gnu.org) compiler 5.4 or higher (Linux/MacOS) or [Microsoft Visual C++ Compiler](https://visualstudio.microsoft.com/visual-cpp-build-tools) 14 or higher (Windows)
   * [Git](https://git-scm.com/downloads) client (only if your are installing from source)
 
+Note:
+  * In all commands below, users must use the correct `python` command (can be `python3` or `python` depending on your configuration)
+  
 ## Package installation from PyPi
 Installation:
 ```sh
@@ -92,7 +95,6 @@ Notes:
   * The full Visual Studio C++ IDE is not necessary. You can 'only' download Visual Studio Build Tools (1,4Go!) (more details [here](https://stackoverflow.com/a/44398715))
   * The *Path* environment variable must be updated to make *python.exe*, *swig.exe* and *doxygen.exe* available in the batch command line (follow [this guide](https://stackoverflow.com/questions/44272416/how-to-add-a-folder-to-path-environment-variable-in-windows-10-with-screensho) to add *C:\\Python39*, *C:\\swigwin-4.0.2* and *C:\\doxygen\\bin* folder in the *Path* variable and restart Windows)
   * The Windows C++ Compiler used by `pip install` must be the same that the one used for compiling Python (Visual C++). If you prefer using another smaller compiler (i.e. MinGW), you could [try this](https://wiki.python.org/moin/WindowsCompilers#GCC_-_MinGW-w64_.28x86.2C_x64.29) (not tested)
-  * In all commands below, Windows users must use `python.exe` (in place of `python3`) and `git.exe` (in place of `git`)
 
 ## Development
 Some of the next commands are git recalls. Others are used for developping and building new versions of this package. They must be executed from *pyswigex* directory. If you want to give a relevant name to your python module, you must find the pattern *fibo* in all files and replace it by your own module name. To change the package name, you must update the first argument of the `setup` command (*pyswigex*) in th *setup.py* file. When creating a new python package, one can test uploading and installing procedures using TestPyPi index before directly uploading it in official PyPi website.
