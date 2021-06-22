@@ -5,13 +5,14 @@ The idea of this **ready to use example** package is to show how to:
   * Distribute the Python package under **PyPi** site index
   
 Currently, this package only provides a class which handles fibonacci series, but feel free to **adapt this example** adding your own C++ code.
-  * TestPyPi download URL: https://test.pypi.org/project/example-pkg-fabien-ors
-  * GitHub source: https://github.com/fabien-ors/example-pkg
+  * PyPi download URL: https://pypi.org/project/pyswigex
+  * GitHub source: https://github.com/fabien-ors/pyswigex
   
 ## References
 This package example follows [this tutorial](https://packaging.python.org/tutorials/packaging-projects).
 It has been modified in order to use SWIG (c++ to python) according [this documentation](https://docs.python.org/3/distutils/setupscript.html).
 Some tricks and advices come from [this package](https://pypi.org/project/swigibpy/).
+It has been initiated and tested [under TestPyPi](https://test.pypi.org/project/example-pkg-fabien-ors/).
 
 This package contains a copy of [doxy2swig](https://github.com/m7thon/doxy2swig) python script (see LICENSE in *doxygen* folder)
 
@@ -23,30 +24,26 @@ For using this package, the following tools must be available (See required tool
   * [GCC](https://gcc.gnu.org) compiler 5.4 or higher (Linux/MacOS) or [Microsoft Visual C++ Compiler](https://visualstudio.microsoft.com/visual-cpp-build-tools) 14 or higher (Windows)
   * [Git](https://git-scm.com/downloads) client (only if your are installing from source)
 
-## Package installation from TestPyPi
+## Package installation from PyPi
 Installation:
 ```sh
-python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple --no-cache-dir example-pkg-fabien-ors
+python3 -m pip install pyswigex
 ```
 Upgrade:
 ```sh
-python3 -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple --no-cache-dir example-pkg-fabien-ors --upgrade
+python3 -m pip install pyswigex --upgrade
 ```
-Notes:
-  * **--index-url** is used because by default, pip looks for packages into PyPi (not TestPyPi)
-  * **--extra-index-url** is used because there is some limitations: test.pypi.org cannot use setuptools! (see [this thread](https://github.com/ultrajson/ultrajson/issues/366))
-  * **--no-cache-dir** is used to ensure downloading last version from TestPyPi (see [this thread](https://stackoverflow.com/questions/9510474/removing-pips-cache))
   
 ## Package installation from sources
 Cloning the repository and installing
 ```sh
-git clone https://github.com/fabien-ors/example-pkg
-cd example-pkg
+git clone https://github.com/fabien-ors/pyswigex
+cd pyswigex
 python3 -m pip install .
 ```
 Or directly installing from github
 ```sh
-python3 -m pip install -U git+https://github.com/fabien-ors/example-pkg.git
+python3 -m pip install -U git+https://github.com/fabien-ors/pyswigex.git
 ```
 
 ## Usage
@@ -98,12 +95,12 @@ Notes:
   * In all commands below, Windows users must use `python.exe` (in place of `python3`) and `git.exe` (in place of `git`)
 
 ## Development
-Some of the next commands are git recalls. Others are used for developping and building new versions of this package. They must be executed from *example-pkg* directory. If you want to give a relevant name to your python module, you must find the pattern *fibo* in all files and replace it by your own module name. To change the package name, you must update the first argument of the `setup` command (*example-pkg-fabien-ors*) in th *setup.py* file.
+Some of the next commands are git recalls. Others are used for developping and building new versions of this package. They must be executed from *pyswigex* directory. If you want to give a relevant name to your python module, you must find the pattern *fibo* in all files and replace it by your own module name. To change the package name, you must update the first argument of the `setup` command (*pyswigex*) in th *setup.py* file. When creating a new python package, one can test uploading and installing procedures using TestPyPi index before directly uploading it in official PyPi website.
 
 ### Create a package tree
 Create initial structure of your own package and add your c++ code in the *src* folder. Mandatory files are *pyproject.toml*, *LICENSE*, *README.md* and *setup.py*. Here is the folders tree of this package:
 ```
-example-pkg/
+pyswigex/
 ├── LICENSE
 ├── pyproject.toml
 ├── MANIFEST.in
@@ -128,7 +125,7 @@ This is done only once when creating a new package:
 git init
 git add *
 git commit
-git remote add origin https://github.com/fabien-ors/example-pkg
+git remote add origin https://github.com/fabien-ors/pyswigex
 git push -u origin master
 ```
 
@@ -169,11 +166,11 @@ python3 -m twine upload --repository testpypi dist/*.tar.gz
 ### Remove installed package
 Not really necessary but just to be confident:
 ```sh
-python3 -m pip uninstall example-pkg-fabien-ors
+python3 -m pip uninstall pyswigex
 ```
 You may sometimes need to remove the site-packages reference to the old version (see [this topic](https://stackoverflow.com/questions/43177200/assertionerror-egg-link-does-not-match-installed-location-of-reviewboard-at))
 ```sh
-rm <path_to_site_package>/example-pkg-fabien-ors.egg-link
+rm <path_to_site_package>/pyswigex.egg-link
 ```
 
 ***

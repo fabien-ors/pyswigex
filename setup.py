@@ -132,16 +132,16 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="example-pkg-fabien-ors",
-    version="0.3.3",
+    name="pyswigex",
+    version="0.0.1",
     author="Fabien Ors",
     author_email="fabien.ors@mines-paristech.fr",
-    description="Ready-to-use complete example of a python source package built from C++ library",
+    description="Ready-to-use complete example of a cross-platform Python source package built from C++ library using SWIG and doxygen",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/fabien-ors/example-pkg",
+    url="https://github.com/fabien-ors/pyswigex",
     project_urls={
-        "Bug Tracker": "https://github.com/fabien-ors/example-pkg/issues",
+        "Bug Tracker": "https://github.com/fabien-ors/pyswigex/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3",
